@@ -39,6 +39,15 @@
 				alert(1);
 			}
 		
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				alert(user.email + " Signed In ");
+			    window.location.href = "home.html";
+		    } else {
+				alert("User not signed in");
+		  	}
+		});
+
 		$(document).ready(function() { 
 
 			$("#login_form_content").hide();
@@ -59,8 +68,9 @@
 				
 				var mEmail = document.getElementById("user_email").value;
 				var mPassword = document.getElementById("user_password").value;
+				mEmail = mEmail.substr(0, mEmail.length - 4);
 				signInUser(mEmail, mPassword);
-				window.location.href = "home.html";
+				
 				
 			});
 

@@ -12,6 +12,30 @@
  		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
  		<link rel="stylesheet" href="main.css" />
  		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+ 		
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+
+	var config = {
+			apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
+			authDomain: "better-way-a8f71.firebaseapp.com",
+			databaseURL: "https://better-way-a8f71.firebaseio.com",
+			projectId: "better-way-a8f71",
+			storageBucket: "better-way-a8f71.appspot.com",
+			messagingSenderId: "692619217213"
+		};
+	firebase.initializeApp(config);
+	
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			alert(user.email);
+		} else {
+			alert("User not signed in");
+		}
+	});
+
+
+</script>
  	</head>
 
 			<!-- Banner -->
