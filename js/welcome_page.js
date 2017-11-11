@@ -7,8 +7,17 @@ $(document).ready(function() {
 	$('.btn').on('click', function () {
 		$('.form').addClass('form--no');
 		
+	});
+	
+	$('#form_submit_register').on('click', function () {
+		
 		window.location.href = "additional_info.html";
 	});
+	$('#form_submit_login').on('click', function () {
+		
+		window.location.href = "home.html";
+	});
+	
 	$('#register_button_id').on('click',function(){ 
 	
 		$("#register_button_id").css("background-color","#a09486");
