@@ -33,6 +33,10 @@
 			alert("User not signed in");
 		}
 	});
+	
+	function signOut() {
+		firebase.auth().signOut();
+	}
 
 
 </script>
@@ -82,7 +86,7 @@
 					</ul>
 					<br />
 										<ul class="actions center-align">
-						<li><a href="BookNow.html">Logout</a></li>
+						<li><a onClick="signOut()">Logout</a></li>
 						
 						
 					</ul>
