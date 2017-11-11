@@ -14,9 +14,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 	<script>
-		$(document).ready(function() { 
-
-			var config = {
+		
+		var config = {
 				apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
 				authDomain: "better-way-a8f71.firebaseapp.com",
 				databaseURL: "https://better-way-a8f71.firebaseio.com",
@@ -24,17 +23,23 @@
 				storageBucket: "better-way-a8f71.appspot.com",
 				messagingSenderId: "692619217213"
 			};
-			firebase.initializeApp(config);
-
-			function signInUser(userEamil, userPassword) {
+		firebase.initializeApp(config);
+		
+		function signInUser(userEmail, userPassword) {
+			
+			alert(userEmail + " " + userPassword);
 				
-				firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+				firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
 			
 				    var errorCode = error.code;
 				    var errorMessage = error.message;
+					alert(errorMessage);
 				    
 				});
+				alert(1);
 			}
+		
+		$(document).ready(function() { 
 
 			$("#login_form_content").hide();
 			$("#form_submit_login").hide();
@@ -52,8 +57,8 @@
 			});
 			$('#form_submit_login').on('click', function () {
 				
-				var mEmail = document.getElementById("user_email");
-				var mPassword = document.getElementById("user_password");
+				var mEmail = document.getElementById("user_email").value;
+				var mPassword = document.getElementById("user_password").value;
 				signInUser(mEmail, mPassword);
 				window.location.href = "home.html";
 				
