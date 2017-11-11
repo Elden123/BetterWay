@@ -16,6 +16,7 @@ $(document).ready(function() {
 	$('#form_submit_register').on('click',function(){ 
 		
 			window.location.href = "home.html";
-		});
+	});
 		
+	
 });
