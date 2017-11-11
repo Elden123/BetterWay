@@ -26,19 +26,27 @@
 		firebase.initializeApp(config);
 		
 		function signInUser(userEmail, userPassword) {
-			
-			alert(userEmail + " " + userPassword);
 				
 				firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
 			
 				    var errorCode = error.code;
 				    var errorMessage = error.message;
-					alert(errorMessage);
+					alert(">" + error.code)
+					alert(">>" + errorMessage);
 				    
 				});
-				alert(1);
 			}
 		
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				alert(user.email + " Signed In ");
+			    window.location.href = "home.html";
+				
+		    } else {
+				alert("User not signed in");
+		  	}
+		});
+
 		$(document).ready(function() { 
 
 			$("#login_form_content").hide();
@@ -51,6 +59,10 @@
 			});
 
 			$('#form_submit_register').on('click', function () {
+				
+				localStorage.setItem("username", document.getElementById("placeUsername").value);
+				localStorage.setItem("email", document.getElementById("placeEmail").value);
+				localStorage.setItem("password", document.getElementById("placePassword").value);
 
 				window.location.href = "additional_info.html";
 				
@@ -59,8 +71,9 @@
 				
 				var mEmail = document.getElementById("user_email").value;
 				var mPassword = document.getElementById("user_password").value;
+				//mEmail = mEmail.substr(0, mEmail.length - 4);
 				signInUser(mEmail, mPassword);
-				window.location.href = "home.html";
+				
 				
 			});
 
@@ -111,15 +124,15 @@
 		
 		<div id="register_form_content">
 			<div class="form__group">
-				<input type="text" placeholder="Username" class="form__input" />
+				<input id="placeUsername" type="text" placeholder="Username" class="form__input" />
 			</div>
 			
 			<div class="form__group">
-				<input type="email" placeholder="Email" class="form__input" />
+				<input id="placeEmail" type="email" placeholder="Email" class="form__input" />
 			</div>
 			
 			<div class="form__group">
-				<input type="password" placeholder="Password" class="form__input" />
+				<input id="placePassword" type="password" placeholder="Password" class="form__input" />
 			</div>
 		</div>
 		

@@ -17,17 +17,80 @@
   <script>
 	  // Initialize Firebase
 	  var config = {
-		apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
-		authDomain: "better-way-a8f71.firebaseapp.com",
-		databaseURL: "https://better-way-a8f71.firebaseio.com",
-		projectId: "better-way-a8f71",
-		storageBucket: "better-way-a8f71.appspot.com",
-		messagingSenderId: "692619217213"
+		  apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
+		  authDomain: "better-way-a8f71.firebaseapp.com",
+		  databaseURL: "https://better-way-a8f71.firebaseio.com",
+		  projectId: "better-way-a8f71",
+		  storageBucket: "better-way-a8f71.appspot.com",
+		  messagingSenderId: "692619217213"
 	  };
 	  firebase.initializeApp(config);
 	  
+	  var database = firebase.database();
 	  
+	  var mUsername = ""; // displayname
+	  var mName = "";
+	  var mUniversity = "";
+	  var mPhoneNumber = "";
 	  
+	  firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				alert(user.email + " Registered ");
+
+				database.ref("Users/" + user.email.substring(0, user.email.indexOf("@")) + "/").set({
+			    	username: mUsername,
+			    	name: mName,
+					university: mUniversity,
+					phoneNumber: mPhoneNumber
+		    	});
+				
+			    window.location.href = "home.html";
+		    } else {
+				alert("User not signed in");
+		  	}
+		});
+	  
+	  $(document).ready(function() { 
+
+		  document.getElementById("title_button_id").disabled = true;
+
+		  $('#register_button_id').on('click',function(){ 
+
+			  $("#register_button_id").css("background-color","#a09486");
+			  $("#login_button_id").css("background-color","#ABA194");
+			  $("#login_form_content").hide();
+			  $("#register_form_content").fadeIn(500);
+
+			  $("#form_submit_login").hide();
+			  $("#form_submit_register").fadeIn(500);
+		  });
+
+		  $('#form_submit_register').on('click',function(){ 
+
+			  //to be uploaded to authenticaion
+			  var mEmail = localStorage.getItem("email");
+			  var mPassword = localStorage.getItem("password");
+
+			  //to be uploaded to database
+			  mUsername = localStorage.getItem("username"); // displayname
+			  mName = document.getElementById("placeFirstName").value + " " + document.getElementById("placeLastName").value;
+			  mUniversity = document.getElementById("placeUniversity").value;
+			  mPhoneNumber = document.getElementById("placePhoneNumber").value;
+
+			  firebase.auth().createUserWithEmailAndPassword(mEmail, mPassword).catch(function(error) {
+
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  alert(">" + error.code);
+				  alert(">>" + error.message);
+
+			  });
+		  
+		  		//window.location.href = "home.html";
+	  		});
+
+		});
+	   
   </script>
 
   
@@ -52,11 +115,11 @@
 		
 		<div id="register_form_content">
 			<div class="form__group">
-				<input type="text" placeholder="First Name" class="form__input" />
+				<input id="placeFirstName" type="text" placeholder="First Name" class="form__input" />
 			</div>
 			
 			<div class="form__group">
-				<input type="email" placeholder="Last Name" class="form__input" />
+				<input id="placeLastName" type="text" placeholder="Last Name" class="form__input" />
 			</div>
 			
 			<div class="form__group">
@@ -71,7 +134,7 @@
 			</div>
 			
 			<div class="form__group">
-				<input type="password" placeholder="Phone Number" class="form__input" />
+				<input id="placePhoneNumber" type="text" placeholder="Phone Number" class="form__input" />
 			</div>
 			
 		</div>
