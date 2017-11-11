@@ -3,17 +3,86 @@
 	
 <head>
 
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script  src="js/welcome_page.js"></script>	
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <!--<script  src="js/welcome_page.js"></script>	-->
 
   <meta charset="UTF-8">
   <title>Simple and light sign up form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="css/style.css">
 
-  
-      <link rel="stylesheet" href="css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+	<script>
+		$(document).ready(function() { 
 
+			var config = {
+				apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
+				authDomain: "better-way-a8f71.firebaseapp.com",
+				databaseURL: "https://better-way-a8f71.firebaseio.com",
+				projectId: "better-way-a8f71",
+				storageBucket: "better-way-a8f71.appspot.com",
+				messagingSenderId: "692619217213"
+			};
+			firebase.initializeApp(config);
+
+			function signInUser(userEamil, userPassword) {
+				
+				firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+			
+				    var errorCode = error.code;
+				    var errorMessage = error.message;
+				    
+				});
+			}
+
+			$("#login_form_content").hide();
+			$("#form_submit_login").hide();
+
+			$('.btn').on('click', function () {
+				
+				$('.form').addClass('form--no');
+
+			});
+
+			$('#form_submit_register').on('click', function () {
+
+				window.location.href = "additional_info.html";
+				
+			});
+			$('#form_submit_login').on('click', function () {
+				
+				var mEmail = document.getElementById("user_email");
+				var mPassword = document.getElementById("user_password");
+				signInUser(mEmail, mPassword);
+				window.location.href = "home.html";
+				
+			});
+
+			$('#register_button_id').on('click',function(){ 
+
+				$("#register_button_id").css("background-color","#a09486");
+				$("#login_button_id").css("background-color","#ABA194");
+				$("#login_form_content").hide();
+				$("#register_form_content").fadeIn(500);
+
+				$("#form_submit_login").hide();
+				$("#form_submit_register").fadeIn(500);
+			});
+			$('#login_button_id').on('click',function(){ 
+				
+				$('#login_button_id').css("background-color","#a09486");
+				$('#register_button_id').css("background-color","#ABA194");
+				$("#register_form_content").hide();
+				$("#login_form_content").fadeIn(500);
+
+				$("#form_submit_register").hide();
+				$("#form_submit_login").fadeIn(500);
+			});
+
+
+		});
+	</script>
   
 </head>
 
@@ -31,8 +100,8 @@
     <form class="form">
 
 		<div class="container">
-			<button id=register_button_id style="background-color:#a09486" class="btn_login_register" type="button">Register</button>
-			<button id=login_button_id class="btn_login_register" type="button">Login</button>
+			<button id="register_button_id" style="background-color:#a09486" class="btn_login_register" type="button">Register</button>
+			<button id="login_button_id" class="btn_login_register" type="button">Login</button>
 		</div>
 		
 		<div id="register_form_content">
@@ -50,12 +119,12 @@
 		</div>
 		
 		<div id="login_form_content">
-			<div id="login_username" class="form__group">
-				<input type="text" placeholder="Username" class="form__input" />
+			<div id="login_email" class="form__group">
+				<input id="user_email" type="text" placeholder="Email" class="form__input" />
 			</div>
 			
 			<div id="login_password" class="form__group">
-				<input type="password" placeholder="Password" class="form__input" />
+				<input id="user_password" type="password" placeholder="Password" class="form__input" />
 			</div>
 		</div>
         
