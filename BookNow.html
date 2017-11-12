@@ -15,7 +15,7 @@
 		<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 		<script>
 			$(document).ready(function() {
-				alert(1);
+				//alert(1);
 				var config = {
 					apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
 					authDomain: "better-way-a8f71.firebaseapp.com",
@@ -24,20 +24,46 @@
 					storageBucket: "better-way-a8f71.appspot.com",
 					messagingSenderId: "692619217213"
 				};
-				var userEmail = "";
+				
 				firebase.initializeApp(config);
+				
+				var userEmail = "";
+				var database = firebase.database();
+				var data = [];
+				var driverEmail = [];
+				var riderEmail = [];
+				var count = 0;
+				var trunc_email;
+				var r;
+				var getRef;
+				var university = "";
+				
 				firebase.auth().onAuthStateChanged(function(user){
 					if(user){
 						userEmail = user.email;
+						//alert(userEmail);
+					} else {
+						alert("No body is signed in");
 					}
 				});
-
-				var database = firebase.database();
-				var data = [];
-				var email1 = [];
-				var email2 = [];
-				var count = 0;
-
+				
+				
+				
+				setTimeout(function() {
+					trunc_email = userEmail.substring(0, userEmail.indexOf('@'));
+					r = database.ref("Users/" + trunc_email);
+					
+					r.once('value').then(function(snapshot) {
+						university = (snapshot.val() && snapshot.val().university);
+					});
+					
+				}, 1000);
+				
+				
+				function addNewDestination(zip, date, university) {
+					
+				}
+				
 
 				$('#testpotato').on("click", function () {
 					var destination = document.getElementById("destination").value;
@@ -47,17 +73,46 @@
 					var driver = document.querySelector('input[name="driverOrPassenger"]:checked').value;
 
 					leaveDate = leaveDate.replace(/-/g, '');
-					///var getRef = database.ref("Destinations/");
-					///getRef.on('child_added', function(snapshot){
-						///lotsOfInformation[count] = snapshot.val().zipcode;
-						///count++;
-					var trunc_email = userEmail.substring(0, userEmail.indexOf('@'));
-
-					var university = database.ref("Users/" + trunc_email + "/university").value;
-
+					
 					var codeVal = destination + " " + leaveDate + " " + university;
-					window.location.href = "home.html";
+					
+					/*database.ref("Destinations/" + codeVal + "/").set({
+			    		driverEmail: "he",
+						riderEmail: "ho"
+		    		});*/
+					
+					database.ref("Destinations").push({
+						data: codeVal,
+			    		driverEmail: null,
+						riderEmail: null
+		    		});
+					
+					/*getRef = database.ref("Destinations/" + codeVal + "/");
+					getRef.on('child_added', function(snapshot){
+						riderEmail[count] = snapshot.val();
+						driverEmail[count] = snapshot.val();
+						alert(riderEmail[count]);
+						count++;
+					});*/
+					
+					getRef = database.ref("Destinations/");
+					getRef.on('child_added', function(snapshot){
+						
+						riderEmail[count] = snapshot.val().riderEmail;
+						driverEmail[count] = snapshot.val().riderEmail;
+						data[count] = snapshot.val().data;
+						alert(data[count]);
+						count++;
+					});
+					
+					
+					
 
+					
+					
+					//call function here
+					
+					//window.location.href = "home.html";
 
 					});
 				});
