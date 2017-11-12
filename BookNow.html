@@ -75,6 +75,13 @@
 				}, 1000);
 
 
+				/**
+				* Adds a new destination to the database
+				* @params {String} tData specific destination
+				* @params {String} tDriverEmail driver email that will be added
+				* @params {String} tRiderEmail rider email that will be added
+				* @example addNewDestination("12278 12342019 University of Kansas", newDriver@email.com, newRider@email.com);
+				*/
 				function addNewDestination(tData, tDriverEmail, tRiderEmail) {
 					database.ref("Destinations/" + tData + "/").set({
 			    		driverEmail: tDriverEmail,
@@ -95,6 +102,9 @@
 					});*/
 				}
 				
+				/**
+				* Fills two arrays. One contains all of the rider emails and one contains all of the driver emails that have parents who's detinations match the one just submitted by the user
+				*/
 				function fillArrays() {
 					getRef = database.ref("Destinations/" + codeVal + "/");
 					getRef.on('child_added', function(snapshot){
@@ -106,6 +116,12 @@
 					});
 				}
 				
+				/**
+				* Updates the email address of the driver for a specific destinatin
+				* @params {String} toCodeVal specific destination
+				* @params {String} newEmail email to update to
+				* @example updateDriverEmail("12278 12342019 University of Kansas", new@email.com);
+				*/
 				function updateDriverEmail(toCodeVal, newEmail) {
 					//alert("% " + aDriverEmail);
 					var postData = {
@@ -115,6 +131,12 @@
 					database.ref("Destinations/" + toCodeVal + "/").update(postData);
 				}
 				
+				/**
+				* Updates the email address of the rider for a specific destinatin
+				* @params {String} toCodeVal specific destination
+				* @params {String} newEmail email to update to
+				* @example updateRiderEmail("12278 12342019 University of Kansas", new@email.com);
+				*/
 				function updateRiderEmail(toCodeVal, newEmail) {
 					//alert("% " + aRiderEmail);
 					var postData = {
@@ -244,7 +266,13 @@
 					//
 				});
 				
-				// Sends notification to e-mail
+				/**
+				* Sends an email to a user
+				* @params {String} message_name Subject line for the email
+				* @params {String} message_body Body of email
+				* @params {String} email address to send message to
+				* @example match_notification("Subject", "Message", notReal@email.com);
+				*/
 				function match_notification(message_name, message_body, email) {
 
 					var service_id = 'gmail'; // Edit
@@ -257,10 +285,6 @@
 					   console.log("FAILED. error=", err);
 					});
 				}
-				
-				//
-				//
-				//
 					
 				});
 		</script>
