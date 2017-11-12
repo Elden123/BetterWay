@@ -12,7 +12,7 @@
  		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
  		<link rel="stylesheet" href="main.css" />
  		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
- 		
+
 <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script>
 
@@ -25,7 +25,7 @@
 			messagingSenderId: "692619217213"
 		};
 	firebase.initializeApp(config);
-	
+
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
 			alert(user.email);
@@ -33,9 +33,10 @@
 			alert("User not signed in");
 		}
 	});
-	
+
 	function signOut() {
 		firebase.auth().signOut();
+		window.location.href = "index.html";
 	}
 
 
@@ -51,7 +52,7 @@
 					<ul class="actions">
 						<li><a href="BookNow.html" class="button">Book Now</a></li>
 						<li><a href="RecentlyBooked.html" class="button">Recently Booked</a></li>
-						
+
 					</ul>
 				</section>
 
@@ -66,29 +67,29 @@
 							<section>
 								<img src="car.png" alt="car" width="100">
 								<h3>The Ride</h3>
-								<p>Find a new friend to join your journey. 
+								<p>Find a new friend to join your journey.
 								</ br>
 								Riding with Better Ways is cheaper than plane, train, or driving alone. With two people, you can split the cost of gas, tolls, and other incurred costs.</p>
 							</section>
 
 					</section>
 
-	
-	
-	
+
+
+
 
 
 			<!-- Footer -->
 				<footer id="footer">
-					
+
 					<ul class="copyright">
 						<li>&copy; Untitled. All rights reserved.</li>
 					</ul>
 					<br />
 										<ul class="actions center-align">
 						<li><a onClick="signOut()">Logout</a></li>
-						
-						
+
+
 					</ul>
 				</footer>
 
