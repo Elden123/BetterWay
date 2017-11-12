@@ -24,7 +24,7 @@
 		<script>
 
 			$(document).ready(function() {
-				//alert(1);
+				////alert(1);
 				var config = {
 					apiKey: "AIzaSyDW30Yc2FAmY8Dq_uqyNQ5G9SZtqLboFBE",
 					authDomain: "better-way-a8f71.firebaseapp.com",
@@ -68,9 +68,9 @@
 				firebase.auth().onAuthStateChanged(function(user){
 					if(user){
 						userEmail = user.email;
-						//alert(userEmail);
+						////alert(userEmail);
 					} else {
-						alert("No body is signed in");
+						//alert("No body is signed in");
 					}
 				});
 
@@ -102,7 +102,7 @@
 					getRef.on('child_added', function(snapshot){
 						riderEmail[count] = snapshot.val();
 						driverEmail[count] = snapshot.val();
-						alert(riderEmail[count]);
+						//alert(riderEmail[count]);
 						count++;
 					});*/
 				}
@@ -115,9 +115,9 @@
 							var key = childSnapshot.key;
 							data[dDataSize] = key;
 							dDataSize++;
-							//alert(data[dataSize]);
+							////alert(data[dataSize]);
 							var pass = key.substring(0,5);
-							//alert(dataSize);
+							////alert(dataSize);
 							//getXYpos(pass, dataSize);
 
 							geocoder = new google.maps.Geocoder();
@@ -131,10 +131,10 @@
 						    	var longitude = results[0].geometry.location.lng();
 									xPoses[dataSize] = latitude;
 									yPoses[dataSize] = longitude;
-									//alert(xPoses[dataSize] + " " + yPoses[dataSize]);
+									////alert(xPoses[dataSize] + " " + yPoses[dataSize]);
 									dataSize++;
 						  	} else {
-									alert(404);
+									//alert(404);
 								}
 
 							});
@@ -155,26 +155,26 @@
 					  	if (status == google.maps.GeocoderStatus.OK) {
 					    	var latitude = results[0].geometry.location.lat();
 					    	var longitude = results[0].geometry.location.lng();
-								alert(latitude);
+								//alert(latitude);
 								xPoses[dataSize] = latitude;
 								yPoses[dataSize] = longitude;
 					  	} else {
-								alert(555);
+								//alert(555);
 							}
 
 						});*/
 
-						//alert(xPoses[0]);
-						//alert(yPoses[0]);
-						//alert(xPoses.length);
-						//alert(dataSize);
+						////alert(xPoses[0]);
+						////alert(yPoses[0]);
+						////alert(xPoses.length);
+						////alert(dataSize);
 
 
 				/*function getZipCodes()
 				{
 					for(var i = 0; i < dataSize; i++){
 						zips.push(data[i].substring(0,5));
-						alert(zips);
+						//alert(zips);
 					}
 				}*/
 
@@ -184,7 +184,7 @@
 
 						riderEmail[count] = snapshot.val().riderEmail;
 						driverEmail[count] = snapshot.val().driverEmail;
-						//alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
+						////alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
 						count++;
 					});
 				}
@@ -206,7 +206,7 @@
 				}
 
 				function updateDriverEmail(toCodeVal, newEmail) {
-					//alert("% " + aDriverEmail);
+					////alert("% " + aDriverEmail);
 					var postData = {
 						driverEmail: newEmail,
 						riderEmail: aRiderEmail
@@ -216,7 +216,7 @@
 
 
 				function updateRiderEmail(toCodeVal, newEmail) {
-					//alert("% " + aRiderEmail);
+					////alert("% " + aRiderEmail);
 					var postData = {
 						riderEmail: newEmail,
 						driverEmail: aDriverEmail
@@ -236,14 +236,14 @@
 
 					if (destination.length != 5)
 					{
-						alert("Provide Valid Zip Code");
+						//alert("Provide Valid Zip Code");
 						return 0;
 					}
 					check_destination = parseInt(destination, 10);
 
 					if (isNaN(check_destination))
 					{
-						alert("Provide Valid Zip Code");
+						//alert("Provide Valid Zip Code");
 						return 0;
 					}
 
@@ -259,7 +259,7 @@
 							long = results[0].geometry.location.lng();
 
 						} else {
-							alert(404);
+							//alert(404);
 						}
 
 					});
@@ -281,52 +281,58 @@
 						alreadyThere = true;
 					});
 
-					//alert(aDriverEmail);
+					////alert(aDriverEmail);
 
 					getRef = database.ref("Destinations/");
 					getRef.on('child_added', function(snapshot){
 
 						riderEmail[count] = snapshot.val().riderEmail;
 						driverEmail[count] = snapshot.val().driverEmail;
-						//alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
+						////alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
 						count++;
 					});
 
 					setTimeout(function() {
-						//alert(data[0] + data[1]+ data[2]);
+						////alert(data[0] + data[1]+ data[2]);
 						for(var i = 0; i < dataSize; i++) {
 							if(codeVal.substring(6) == data[i].substring(6)) {
 
 									d = distance(xPoses[i], yPoses[i], lat, long);
 									d = d / 69;
-										alert(d);
+										////alert(d);
 									if (d <= 35) {
-alert(2);
+   ////alert(2);
 										if (driver_check == "driver") {
-											alert(driverEmail[i] + " " + riderEmail[i]);
+											//alert(driverEmail[i] + " " + riderEmail[i]);
 											if(driverEmail[i] == "") {
 												aRiderEmail = riderEmail[i];
-												alert(aRiderEmail);
+												//alert(aRiderEmail);
 												updateDriverEmail(data[i], userEmail);
 												i = dataSize;
 												createNew = false;
+												window.location.href = "RecentlyBooked.html";
+												match_notification("BetterWay", "You have been matched! Check the app for more info.", aDriverEmail);
 
 											}
 											else if(riderEmail[i] == ""){
 												aDriverEmail = driverEmail[i];
-												alert(aDriverEmail);
+												//alert(aDriverEmail);
 												updateRiderEmail(data[i], userEmail);
 												i = dataSize;
 												createNew = false;
+												window.location.href = "RecentlyBooked.html";
+												match_notification("BetterWay", "You have been matched! Check the app for more info.", aRiderEmail);
 											}
 										}
 										else {
 											if(riderEmail[i] == ""){
 												aDriverEmail = driverEmail[i];
-												alert(aDriverEmail);
+												//alert(aDriverEmail);
 												updateRiderEmail(data[i], userEmail);
 												i = dataSize;
 												createNew = false;
+												window.location.href = "RecentlyBooked.html";
+												match_notification("BetterWay", "You have been matched! Check the app for more info.", aDriverEmail);
 											}
 										}
 									}
@@ -337,8 +343,10 @@ alert(2);
 						if(createNew && driver_check == "driver") {
 
 							addNewDestination(codeVal, userEmail, "");
+							window.location.href = "CheckLater.html";
 						} else if(createNew && driver_check == "passenger") {
 							addNewDestination(codeVal, "", userEmail);
+							window.location.href = "CheckLater.html";
 						}
 
 
