@@ -248,7 +248,7 @@
 					var service_id = 'gmail'; // Edit
 					var template_id = 'template_1B1ld9hk'; // Edit
 
-					emailjs.send(service_id,template_id,{"from_name": message_name, "message_html": message_body, "to_name": email})
+					emailjs.send(service_id,template_id,{"from_name": message_name, "message_html": message_body, "to_email": email})
 					.then(function(response) {
 					   console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
 					}, function(err) {
