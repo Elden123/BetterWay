@@ -22,6 +22,7 @@ function getLocationData(position, callback) {
     geocoder.geocode({ 'address': location }, function (results, status) {
       if( status == google.maps.GeocoderStatus.OK ) {
         callback(results[0]);
+	      alert(results[0];
       }
     });
   }
