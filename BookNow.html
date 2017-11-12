@@ -13,9 +13,8 @@
 			  emailjs.init("user_MJi0lvyxnqow6o973Zdpz");
 		   })();
 		</script>
-
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFb-tnhXz4ZKKH-BOjgcDXTN3_tVWPwU8&libraries=geometry"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -39,14 +38,15 @@
 
 				var userEmail = "";
 				var database = firebase.database();
-				var data = [];
-				var zips = [];
+				var data = ["aa"];
+				var zips = ["aa"];
 				var driverEmail = [];
 				var riderEmail = [];
 				var aRiderEmail = "";
 				var aDriverEmail = "";
 				var count = 0;
 				var dataSize = 0;
+				var dDataSize = 0;
 				var trunc_email;
 				var r;
 				var getRef;
@@ -55,8 +55,15 @@
 				var alreadyThere = false;
 				var messageName = "BetterWay";
 				var messageBody = "You have found a match on BetterWay! Check the app to get in contact with them!";
-				var xPoses = [];
-				var yPoses = [];
+				var xPoses = [0.0];
+				var yPoses = [0.0];
+				var geocoder;
+				var address;
+				var tLat;
+				var tLong;
+				var d;
+				var dateUniversity;
+				var createNew = true;
 
 				firebase.auth().onAuthStateChanged(function(user){
 					if(user){
@@ -106,42 +113,63 @@
 					test.once("value").then(function(snapshot){
 						snapshot.forEach(function(childSnapshot){
 							var key = childSnapshot.key;
-							data.push(key);
+							data[dDataSize] = key;
+							dDataSize++;
+							//alert(data[dataSize]);
 							var pass = key.substring(0,5);
-							pass = parseInt(pass);
-							zips.push(pass);
-							alert(zips);
-							dataSize++;
+							//alert(dataSize);
+							//getXYpos(pass, dataSize);
+
+							geocoder = new google.maps.Geocoder();
+							address = pass;
+
+
+								geocoder.geocode( { 'address': address}, function(results, status) {
+
+						  	if (status == google.maps.GeocoderStatus.OK) {
+						    	var latitude = results[0].geometry.location.lat();
+						    	var longitude = results[0].geometry.location.lng();
+									xPoses[dataSize] = latitude;
+									yPoses[dataSize] = longitude;
+									//alert(xPoses[dataSize] + " " + yPoses[dataSize]);
+									dataSize++;
+						  	} else {
+									alert(404);
+								}
+
+							});
+
+
+
 						});
 					});
-					getXYpos();
 				}
 
-				function getXYpos()
+				/*function getXYpos(zip, value)
 				{
-					for (int i = 0; i < datasize; i++)
-					{
-						var geocoder = new google.maps.Geocoder();
-						var address = zips[i];
+						geocoder = new google.maps.Geocoder();
+						address = zip;
 
 							geocoder.geocode( { 'address': address}, function(results, status) {
 
 					  	if (status == google.maps.GeocoderStatus.OK) {
 					    	var latitude = results[0].geometry.location.lat();
 					    	var longitude = results[0].geometry.location.lng();
-								xPoses.push(latitude);
-								yPoses.push(longitude);
-					  	}
-
-							if (xPoses.length != dataSize)
-							{
-								xPoses = [];
-								yPoses = [];
-								getXYpos();
+								alert(latitude);
+								xPoses[dataSize] = latitude;
+								yPoses[dataSize] = longitude;
+					  	} else {
+								alert(555);
 							}
-						});
-					}
-				}
+
+						});*/
+
+						//alert(xPoses[0]);
+						//alert(yPoses[0]);
+						//alert(xPoses.length);
+						//alert(dataSize);
+
+
 				/*function getZipCodes()
 				{
 					for(var i = 0; i < dataSize; i++){
@@ -161,6 +189,22 @@
 					});
 				}
 
+				function distance(lat1, lon1, lat2, lon2) {
+					var radlat1 = Math.PI * lat1/180;
+					var radlon1 = Math.PI * lon1/180;
+					var radlat2 = Math.PI * lat2/180;
+					var radlon2 = Math.PI * lon2/180;
+					var theta = lon1 - lon2;
+					var radTheta = Math.PI * theta / 180;
+					var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radTheta);
+					dist = Math.acos(dist);
+					dist = dist * 180/Math.PI;
+					dist = dist * 60 * 1.1515 * .8684;
+					dist = Math.round(dist * 10000)/10000;
+					return dist;
+
+				}
+
 				function updateDriverEmail(toCodeVal, newEmail) {
 					//alert("% " + aDriverEmail);
 					var postData = {
@@ -169,6 +213,7 @@
 					};
 					database.ref("Destinations/" + toCodeVal + "/").update(postData);
 				}
+
 
 				function updateRiderEmail(toCodeVal, newEmail) {
 					//alert("% " + aRiderEmail);
@@ -180,12 +225,15 @@
 				}
 
 				$('#testpotato').on("click", function () {
+					dataSize = 0;
+
 					setDataArray();
 					var destination = document.getElementById("destination").value;
 					var leaveDate = document.getElementById("leaveDate").value;
 					var driver_check = document.querySelector('input[name="driverOrPassenger"]:checked').value;
 					leaveDate = leaveDate.replace(/-/g, '');
 					var codeVal = destination + " " + leaveDate + " " + university;
+
 					if (destination.length != 5)
 					{
 						alert("Provide Valid Zip Code");
@@ -198,10 +246,30 @@
 						alert("Provide Valid Zip Code");
 						return 0;
 					}
+
+
+					geocoder = new google.maps.Geocoder();
+					address = destination;
+
+
+						geocoder.geocode( { 'address': address}, function(results, status) {
+
+						if (status == google.maps.GeocoderStatus.OK) {
+							lat = results[0].geometry.location.lat();
+							long = results[0].geometry.location.lng();
+
+						} else {
+							alert(404);
+						}
+
+					});
+
 					/*database.ref("Destinations/" + codeVal + "/").set({
 			    		driverEmail: "tDriverEmail",
 						riderEmail: "tRiderEmail"
 		    		});*/
+
+
 
 					getRef = database.ref("Destinations/" + codeVal + "/");
 					getRef.on('child_added', function(snapshot){
@@ -225,53 +293,57 @@
 					});
 
 					setTimeout(function() {
-						if(driver_check == "driver")
-							{
-								if(alreadyThere ) // we need to make the driver a rider
-								{
-									if(aDriverEmail == "") {
-										alert(1);
-										updateDriverEmail(codeVal, userEmail);
-										//match_notification(messageName, messageBody, aRiderEmail);
-									}else if(aRiderEmail == "") {
-										alert(2);
-										updateRiderEmail(codeVal, userEmail);
-										//match_notification(messageName, messageBody, aDriverEmail);
+						//alert(data[0] + data[1]+ data[2]);
+						for(var i = 0; i < dataSize; i++) {
+							if(codeVal.substring(6) == data[i].substring(6)) {
+
+									d = distance(xPoses[i], yPoses[i], lat, long);
+									d = d / 69;
+										alert(d);
+									if (d <= 35) {
+alert(2);
+										if (driver_check == "driver") {
+											alert(driverEmail[i] + " " + riderEmail[i]);
+											if(driverEmail[i] == "") {
+												aRiderEmail = riderEmail[i];
+												alert(aRiderEmail);
+												updateDriverEmail(data[i], userEmail);
+												i = dataSize;
+												createNew = false;
+
+											}
+											else if(riderEmail[i] == ""){
+												aDriverEmail = driverEmail[i];
+												alert(aDriverEmail);
+												updateRiderEmail(data[i], userEmail);
+												i = dataSize;
+												createNew = false;
+											}
+										}
+										else {
+											if(riderEmail[i] == ""){
+												aDriverEmail = driverEmail[i];
+												alert(aDriverEmail);
+												updateRiderEmail(data[i], userEmail);
+												i = dataSize;
+												createNew = false;
+											}
+										}
 									}
-
-								}
-
-								else //create destination with driver as driver and rider as ""
-								{
-									alert(3);
-									addNewDestination(codeVal, userEmail, "");
-								}
-
 							}
 
-							else
-							{
-								if(alreadyThere) // update riderEmail to userEmail
-								{
-									if(aDriverEmail == "") {
-										alert(4);
-										updateDriverEmail(codeVal, userEmail);
-										//match_notification(messageName, messageBody, aRiderEmail);
-									}else if(aRiderEmail == "") {
-										alert(5);
-										updateRiderEmail(codeVal, userEmail);
-										//match_notification(messageName, messageBody, aDriverEmail);
-									}
-								}
+						}
 
-								else //create a new destination with rider as userEmail and driver as ""
-								{
-									alert(6);
-									addNewDestination(codeVal, "", userEmail);
-								}
+						if(createNew && driver_check == "driver") {
 
-							}
-					}, 1500);
+							addNewDestination(codeVal, userEmail, "");
+						} else if(createNew && driver_check == "passenger") {
+							addNewDestination(codeVal, "", userEmail);
+						}
+
+
+
+					}, 2500);
 
 
 
