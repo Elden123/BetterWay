@@ -14,11 +14,12 @@
 <script>
 	alert("test");
 	geocoder = new google.maps.Geocoder();
-
+	var address = 66223;
+	
 function codeAddress() {
 
     //In this case it gets the address from an element on the page, but obviously you  could just pass it to the method instead
-    var address = 66223;
+    
 
     geocoder.geocode( { 'address' : address }, function( results, status ) {
         if( status == google.maps.GeocoderStatus.OK ) {
