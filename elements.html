@@ -17,10 +17,9 @@
 	<body>
 	<script>	
 		var userin = prompt("What is lat1?");
-		var distance1 = distance(51.5112139, -0.119824, 48.8567, 2.3508, 'K');
-		alert(distance1);
+
 		
-		function distance(lat1, lon1, lat2, lon2, N) {
+		function distance(lat1, lon1, lat2, lon2) {
         var radlat1 = Math.PI * lat1/180
         var radlat2 = Math.PI * lat2/180
         var radlon1 = Math.PI * lon1/180
@@ -30,13 +29,12 @@
         var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
         dist = Math.acos(dist)
         dist = dist * 180/Math.PI
-        dist = dist * 60 * 1.1515
-        if (unit=="K") { dist = dist * 1.609344 }
-        if (unit=="N") { dist = dist * 0.8684 }
+        dist = dist * 60 * 1.1515 *.8684
       	return dist}
 		
 		alert("Pre test1");
-
+		var distance1 = distance(51.5112139, -0.119824, 48.8567, 2.3508);
+		alert(distance1);
 		
 		
 		</script>
