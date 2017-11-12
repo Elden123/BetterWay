@@ -103,5 +103,5 @@ Signs in a user to the website
 **Examples**
 
 ```javascript
-signInUser{"notReal@email.com", "password123"}
+signInUser("notReal@email.com", "password123")
 ```
