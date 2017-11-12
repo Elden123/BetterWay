@@ -67,6 +67,13 @@
 					alert("Provide .edu email address");
 					return 0;
 				}
+
+				var check_password = document.getElementById("placePassword").value;
+				if (check_password.length < 6)
+				{
+					alert("Provide longer password");
+					return 0;
+				}
 				localStorage.setItem("username", document.getElementById("placeUsername").value);
 				localStorage.setItem("email", document.getElementById("placeEmail").value);
 				localStorage.setItem("password", document.getElementById("placePassword").value);
