@@ -25,10 +25,13 @@ function codeAddress() {
         if( status == google.maps.GeocoderStatus.OK ) {
 
                //In this case it creates a marker, but you can get the lat and lng from the location.LatLng
-            map.setCenter( results[0].geometry.location );
+           /* map.setCenter( results[0].geometry.location );
             var marker = new google.maps.Marker( {
                 map     : map,
-                position: results[0].geometry.location
+                position: results[0].geometry.location*/
+		
+		var long = results[0].geometry.location.lng();
+		var lat = results[0].geometry.location.lat();
             } );
         } else {
             alert( 'Geocode was not successful for the following reason: ' + status );
@@ -36,7 +39,7 @@ function codeAddress() {
     } );
 }
 	
-	alert(results[0]);
+	alert(lat);
 </script>				
 </head>
 				
