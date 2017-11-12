@@ -12,6 +12,69 @@
 		<link rel="stylesheet" href="https://rawgit.com/Elden123/BetterWay/master/main.css" />
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<style>
+			table {
+				margin: 0 0 2em 0;
+				width: 100%;
+			}
+
+				table tbody tr {
+					border-style: none;
+					border-left: 0;
+					border-right: 0;
+				}
+
+					table tbody tr:nth-child(2n + 1) {
+						/*background-color: #f8f8f8;*/
+						background-color: rgba(248,248,248,.75);
+					}
+
+				table td {
+					padding: 0.75em 0.75em;
+				}
+
+				table th {
+					color: #646464;
+					font-size: 0.9em;
+					font-weight: 300;
+					padding: 0 0.75em 0.75em 0.75em;
+					text-align: left;
+				}
+
+				table thead {
+					border-style: none;
+				}
+
+				table tfoot {
+					border-style: none;
+				}
+
+				table.alt {
+					border-collapse: separate;
+				}
+
+					table.alt tbody tr td {
+						border: solid 1px #e5e5e5;
+						border-left-width: 0;
+						border-top-width: 0;
+					}
+
+						table.alt tbody tr td:first-child {
+							border-left-width: 1px;
+						}
+
+					table.alt tbody tr:first-child td {
+						border-top-width: 1px;
+					}
+
+					table.alt thead {
+						border-bottom: 0;
+					}
+
+					table.alt tfoot {
+						border-top: 0;
+					}
+		</style>
 		<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 		<script>
 		
@@ -151,7 +214,14 @@
 				
 		</script>
 	</head>
-	<body>
+	<body style="background-size: 200% 100% !important;
+  -webkit-animation: move 10s ease infinite;
+          animation: move 10s ease infinite;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  background: -webkit-linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
+  background: linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
+  height: 100vh;">
 		<div id="page-wrapper">
 
 
@@ -165,7 +235,7 @@
 
 									
 									<div class="table-wrapper">
-										<table class="alt">
+										<table class="alt6" css="border-style:">
 											<thead>
 												<tr>
 													<th>Date</th>
