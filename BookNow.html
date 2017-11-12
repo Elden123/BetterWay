@@ -41,8 +41,8 @@
 				var data = [];
 				var driverEmail = [];
 				var riderEmail = [];
-				var aRiderEmail;
-				var aDriverEmail;
+				var aRiderEmail = "";
+				var aDriverEmail = "";
 				var count = 0;
 				var trunc_email;
 				var r;
@@ -169,15 +169,21 @@
 					setTimeout(function() {
 						if(driver_check == "driver")
 							{
-								if(alreadyThere) // we need to make the driver a rider
+								if(alreadyThere ) // we need to make the driver a rider
 								{
-									alert(1);
-									updateDriverEmail(codeVal, userEmail);
+									if(driverEmail == "") {
+										alert(1);
+										updateDriverEmail(codeVal, userEmail);
+									}else if(riderEmail == "") {
+										alert(2);
+										updateRiderEmail(codeVal, userEmail);
+									}
+									
 								}
 
 								else //create destination with driver as driver and rider as ""
 								{
-									alert(2);
+									alert(3);
 									addNewDestination(codeVal, userEmail, "");
 								}
 
@@ -187,13 +193,18 @@
 							{
 								if(alreadyThere) // update riderEmail to userEmail
 								{
-									alert(3);
-									updateRiderEmail(codeVal, userEmail);
+									if(driverEmail == "") {
+										alert(4);
+										updateDriverEmail(codeVal, userEmail);
+									}else if(riderEmail == "") {
+										alert(5);
+										updateRiderEmail(codeVal, userEmail);
+									}
 								}
 
 								else //create a new destination with rider as userEmail and driver as ""
 								{
-									alert(4);
+									alert(6);
 									addNewDestination(codeVal, "", userEmail);
 								}
 
