@@ -16,10 +16,8 @@
 	
 	<body>
 	<script>	
-		var lat1 = prompt("What is lat1?");
-		var lon1 = 35;
-		var lat2 = 70;
-		var lon2 = 56;
+		var userin = prompt("What is lat1?");
+
 		
 		function distance(lat1, lon1, lat2, lon2, N) {
         var radlat1 = Math.PI * lat1/180
@@ -36,7 +34,7 @@
         if (unit=="N") { dist = dist * 0.8684 }
       
 			
-	window.distance(lat1, lon1, lat2, lon2, N);
+	window.distance(userin, 35, 14,60, N);
 			
 }
 		</script>
