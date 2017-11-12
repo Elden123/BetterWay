@@ -16,7 +16,10 @@
 	
 	<body>
 	<script>	
-		var userin = prompt("What is lat1?");
+		var userinlat1 = prompt("What is lat1?");
+		var userinlat2 = prompt("What is lat2?")
+		var userinlon1 = prompt("What is lon1?")
+		var userinlon2 = prompt("What is lon2?")
 
 		
 		function distance(lat1, lon1, lat2, lon2) {
@@ -32,8 +35,8 @@
         dist = dist * 60 * 1.1515 *.8684
       	return dist}
 		
-		alert("Pre test1");
-		var distance1 = distance(51.5112139, -0.119824, 48.8567, 2.3508);
+		
+		var distance1 = distance(lat1, lat2, lon1, lon2);
 		alert(distance1);
 		
 		
