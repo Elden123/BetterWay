@@ -40,20 +40,24 @@
 
 
 				$('#testpotato').on("click", function () {
-					alert(5);
-					var destination = document.getElementByID("destination");
-					var leaveDate = document.getElementByID("leaveDate");
-					var driver = document.getElementbyName("driverOrPassenger");
+					var destination = document.getElementById("destination").value;
+
+					var leaveDate = document.getElementById("leaveDate").value;
+
+					var driver = document.querySelector('input[name="driverOrPassenger"]:checked').value;
+
 					leaveDate = leaveDate.replace(/-/g, '');
+					alert(leaveDate);
 					///var getRef = database.ref("Destinations/");
 					///getRef.on('child_added', function(snapshot){
 						///lotsOfInformation[count] = snapshot.val().zipcode;
 						///count++;
-					var trunc_email = userEmail.substring(0, indexOf('@'));
-					var university = database.ref("Users/" + trunc_email + "/university");
+					var trunc_email = userEmail.substring(0, userEmail.indexOf('@'));
+					alert(trunc_email);
+					var university = database.ref("Users/" + trunc_email + "/university").value;
 
-					var codeVal = destination + " " + leavedate + " " + university;
-
+					var codeVal = destination + " " + leaveDate + " " + university;
+					alert(codeVal);
 					window.location.href = "home.html";
 
 
@@ -69,7 +73,7 @@
          <ul class="actions align-center">
 					 <div class="box">
 						 <form method="post" action="#">
-							 <input type="text" name="destination" id="destination" value="" placeholder="Destination Zipcode" />
+							 <input type="text" name="destination" id="destination" placeholder="Destination Zipcode" />
   					 			<p></p>
                 				<form>
                             Leave Date:
