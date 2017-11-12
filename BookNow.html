@@ -73,11 +73,13 @@
 					var codeVal = destination + " " + leaveDate + " " + university;
 					if (destination.length > 5)
 					{
+						alert("Provide Valid Zip Code");
 						return 0;
 					}
 					check_destination = parseInt(destination, 10);
 					if (check_destination == NaN)
 					{
+						alert("Provide Valid Zip Code");
 						return 0;
 					}
 					/*database.ref("Destinations/" + codeVal + "/").set({
