@@ -10,27 +10,28 @@
  		<link rel="stylesheet" href="main.css" />
  		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFb-tnhXz4ZKKH-BOjgcDXTN3_tVWPwU8&libraries=geometry"></script>
+	
 	<script>
-
-	alert("test");
 	
-function getLocationData(position, callback) {
-  geocoder = new google.maps.Geocoder();
-  var location = 'Billings,MT';
-
-  if( geocoder ) {
-    geocoder.geocode({ 'address': location }, function (results, status) {
-      if( status == google.maps.GeocoderStatus.OK ) {
-       // callback(results[0]);
-	   var lat = callback(results[0]).lat;
-	      alert(lat);
+	      function geocodeAddress(geocoder, resultsMap) {
+        var address = 'Overland Park, KS'.value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+           
+            var map = results[0].geometry.Location;
+		  alert(map);
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
       }
-	   
-    });
-  }
-}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFb-tnhXz4ZKKH-BOjgcDXTN3_tVWPwU8&callback=initMap">
+    </script>
 	
-</script>				
+			
 </head>
 				
 <body>
