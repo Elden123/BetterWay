@@ -67,15 +67,19 @@
 
 				$('#testpotato').on("click", function () {
 					var destination = document.getElementById("destination").value;
-
 					var leaveDate = document.getElementById("leaveDate").value;
-
 					var driver = document.querySelector('input[name="driverOrPassenger"]:checked').value;
-
 					leaveDate = leaveDate.replace(/-/g, '');
-
 					var codeVal = destination + " " + leaveDate + " " + university;
-
+					if (destination.length > 5)
+					{
+						return 0;
+					}
+					check_destination = parseInt(destination, 10);
+					if (check_destination == NaN)
+					{
+						return 0;
+					}
 					/*database.ref("Destinations/" + codeVal + "/").set({
 			    		driverEmail: "he",
 						riderEmail: "ho"
