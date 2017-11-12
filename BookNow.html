@@ -24,9 +24,9 @@
 					storageBucket: "better-way-a8f71.appspot.com",
 					messagingSenderId: "692619217213"
 				};
-				
+
 				firebase.initializeApp(config);
-				
+
 				var userEmail = "";
 				var database = firebase.database();
 				var data = [];
@@ -37,7 +37,7 @@
 				var r;
 				var getRef;
 				var university = "";
-				
+
 				firebase.auth().onAuthStateChanged(function(user){
 					if(user){
 						userEmail = user.email;
@@ -46,24 +46,24 @@
 						alert("No body is signed in");
 					}
 				});
-				
-				
-				
+
+
+
 				setTimeout(function() {
 					trunc_email = userEmail.substring(0, userEmail.indexOf('@'));
 					r = database.ref("Users/" + trunc_email);
-					
+
 					r.once('value').then(function(snapshot) {
 						university = (snapshot.val() && snapshot.val().university);
 					});
-					
+
 				}, 1000);
-				
-				
+
+
 				function addNewDestination(zip, date, university) {
-					
+
 				}
-				
+
 
 				$('#testpotato').on("click", function () {
 					var destination = document.getElementById("destination").value;
@@ -73,20 +73,20 @@
 					var driver = document.querySelector('input[name="driverOrPassenger"]:checked').value;
 
 					leaveDate = leaveDate.replace(/-/g, '');
-					
+
 					var codeVal = destination + " " + leaveDate + " " + university;
-					
+
 					/*database.ref("Destinations/" + codeVal + "/").set({
 			    		driverEmail: "he",
 						riderEmail: "ho"
 		    		});*/
-					
-					database.ref("Destinations").push({
+
+					/*database.ref("Destinations").push({
 						data: codeVal,
 			    		driverEmail: null,
 						riderEmail: null
-		    		});
-					
+					});*/
+
 					/*getRef = database.ref("Destinations/" + codeVal + "/");
 					getRef.on('child_added', function(snapshot){
 						riderEmail[count] = snapshot.val();
@@ -94,24 +94,102 @@
 						alert(riderEmail[count]);
 						count++;
 					});*/
-					
+
 					getRef = database.ref("Destinations/");
 					getRef.on('child_added', function(snapshot){
-						
+
 						riderEmail[count] = snapshot.val().riderEmail;
 						driverEmail[count] = snapshot.val().riderEmail;
 						data[count] = snapshot.val().data;
 						alert(data[count]);
 						count++;
 					});
-					
-					
-					
 
-					
-					
+					if(driver_check == "driver")
+					{
+						if(codeVal in data)
+						{
+							var codeValIndex = data.indexOf(codeVal);
+							if(driverEmail[codeValIndex] == NULL)
+							{
+								driverEmail[codeValIndex] = userEmail;
+								//store userEmail as driverEmail in data in firebase
+								//update both users of match
+								//set codeVal and children in firebase to NULL
+								driverEmail.remove(codeValIndex);
+								riderEmail.remove(codeValIndex);
+								data.remove(codeValIndex);
+								window.location.href = "RecentlyBooked.html";
+							}
+							else
+							{
+								data.push(codeVal);
+								driverEmail.push(userEmail);
+								riderEmail.push(NULL);
+								//add codeVal to Destinations
+								//create two children under codeVal name driverEmail and riderEmail
+								//set driverEmail to userEmail and riderEmail to NULL
+								window.location.href = "CheckLater.html";
+							}
+						}
+
+						else
+						{
+							data.push(codeVal); //update
+							driverEmail.push(userEmail);
+							riderEmail.push(NULL);
+							//add codeVal to Destinations
+							//create two children under codeVal name driverEmail and riderEmail
+							//set driverEmail to userEmail and riderEmail to NULL
+							window.location.href = "CheckLater.html";
+						}
+
+					}
+
+					else
+					{
+						if(codeVal in data)
+						{
+							var codeValIndex = data.indexOf(codeVal);
+							if(riderEmail[codeValIndex] == NULL)
+							{
+								riderEmail[codeValIndex] = userEmail;
+								//store userEmail as driverEmail in data in firebase
+								//update both users of match
+								//delete codeVal and children
+								window.location.href = "RecentlyBooked.html";
+							}
+							else
+							{
+								data.push(codeVal); //update arrays
+								driverEmail.push(NULL);
+								riderEmail.push(userEmail);
+								//add codeVal to Destinations
+								//create two children under codeVal name driverEmail and riderEmail
+								//set driverEmail to userEmail and riderEmail to NULL
+								window.location.href = "CheckLater.html";
+							}
+						}
+
+						else
+						{
+							data.push(codeVal);
+							driverEmail.push(userEmail);
+							riderEmail.push(NULL);
+							//add codeVal to Destinations
+							//create two children under codeVal name driverEmail and riderEmail
+							//set driverEmail to userEmail and riderEmail to NULL
+							window.location.href = "CheckLater.html";
+						}
+
+					}
+
+
+
+
+
 					//call function here
-					
+
 					//window.location.href = "home.html";
 
 					});
