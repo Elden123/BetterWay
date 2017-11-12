@@ -108,7 +108,7 @@
 					//alert("% " + aDriverEmail);
 					var postData = {
 						driverEmail: newEmail,
-						riderEmail: riderEmail[count-1]
+						riderEmail: aRiderEmail
 					};
 					database.ref("Destinations/" + toCodeVal + "/").update(postData);
 				}
@@ -117,7 +117,7 @@
 					//alert("% " + aRiderEmail);
 					var postData = {
 						riderEmail: newEmail,
-						driverEmail: driverEmail[count-1]
+						driverEmail: aDriverEmail
 					};
 					database.ref("Destinations/" + toCodeVal + "/").update(postData);
 				}
