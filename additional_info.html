@@ -74,7 +74,8 @@
 			  //to be uploaded to database
 			  mUsername = localStorage.getItem("username"); // displayname
 			  mName = document.getElementById("placeFirstName").value + " " + document.getElementById("placeLastName").value;
-			  mUniversity = document.getElementById("placeUniversity").value;
+			  
+			  mUniversity= document.getElementById("placeUniversity").value;
 			  mPhoneNumber = document.getElementById("placePhoneNumber").value;
 
 			  firebase.auth().createUserWithEmailAndPassword(mEmail, mPassword).catch(function(error) {
@@ -123,13 +124,13 @@
 			</div>
 			
 			<div class="form__group">
-				<select class="select-style university" name="University">
+				<select class="select-style university" id="placeUniversity" name="University">
 				<option style="background-color:white; color:#8e8e8e;" value="select">Select University</option>
-				<option value="University_of_Kansas">University of Kansas</option>
-				<option value="University_of_Texas">University of Texas</option>
-				<option value="Baylor_University">Baylor University</option>
-				<option value="ITT_Tech">ITT Tech</option>
-				<option value="Missouri_University">Missouri University</option>
+				<option value="University of Kansas">University of Kansas</option>
+				<option value="University of Texas">University of Texas</option>
+				<option value="Baylor University">Baylor University</option>
+				<option value="ITT Tech">ITT Tech</option>
+				<option value="Missouri University">Missouri University</option>
 				</select>
 			</div>
 			
