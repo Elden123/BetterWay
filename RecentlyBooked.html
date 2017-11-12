@@ -169,7 +169,7 @@
 								if(otherUserPhoneNumber.indexOf("(") == -1) {
 									otherUserPhoneNumber = "(" + otherUserPhoneNumber.substring(0, 3) + ") " + otherUserPhoneNumber.substring(3, 6) + "-" + otherUserPhoneNumber.substring(6);	
 								}
-								$("#toAddTo").append("<tr><td>" + date + "</td><td>" + zip + "</td><td>Rider</td><td>" + otherUserName + "</td><td>" + otherUserEmail + "</td><td>" + otherUserPhoneNumber + "</td></tr>");
+								$("#toAddTo").append("<tr><td>" + date + "</td><td>" + zip + "</td><td>Rider</td><td>" + otherUserEmail + "</td><td>" + otherUserPhoneNumber + "</td></tr>");
 							}, 750);
 							
 						}
@@ -203,7 +203,7 @@
 								if(otherUserPhoneNumber.indexOf("(") == -1) {
 									otherUserPhoneNumber = "(" + otherUserPhoneNumber.substring(0, 3) + ") " + otherUserPhoneNumber.substring(3, 6) + "-" + otherUserPhoneNumber.substring(6);	
 								}
-								$("#toAddTo").append("<tr><td>" + date + "</td><td>" + zip + "</td><td>Driver</td><td>" + otherUserName + "</td><td>" + otherUserEmail + "</td><td>" + otherUserPhoneNumber + "</td></tr>");
+								$("#toAddTo").append("<tr><td>" + date + "</td><td>" + zip + "</td><td>Driver</td><td>" + otherUserEmail + "</td><td>" + otherUserPhoneNumber + "</td></tr>");
 							}, 750);
 							
 						}
@@ -241,7 +241,6 @@
 													<th>Date</th>
 													<th>Destination (Zip Code)</th>
 													<th>Role</th>
-													<th>Name</th>
 													<th>Paired Email</th>
 													<th>Paired Phone Number</th>
 												</tr>
