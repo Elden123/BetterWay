@@ -50,6 +50,8 @@
 				var university = "";
 				var codVal;
 				var alreadyThere = false;
+				var messageName = "BetterWay";
+				var messageBody = "You have found a match on BetterWay! Check the app to get in contact with them!";
 
 				firebase.auth().onAuthStateChanged(function(user){
 					if(user){
@@ -176,9 +178,11 @@
 									if(aDriverEmail == "") {
 										alert(1);
 										updateDriverEmail(codeVal, userEmail);
+										match_notification(messageName, messageBody, aRiderEmail);
 									}else if(aRiderEmail == "") {
 										alert(2);
 										updateRiderEmail(codeVal, userEmail);
+										match_notification(messageName, messageBody, aDriverEmail);
 									}
 									
 								}
@@ -198,9 +202,11 @@
 									if(aDriverEmail == "") {
 										alert(4);
 										updateDriverEmail(codeVal, userEmail);
+										match_notification(messageName, messageBody, aRiderEmail);
 									}else if(aRiderEmail == "") {
 										alert(5);
 										updateRiderEmail(codeVal, userEmail);
+										match_notification(messageName, messageBody, aDriverEmail);
 									}
 								}
 
@@ -226,8 +232,7 @@
 				//
 				
 				$('#testpotato').on('click',function(){ 
-					var messageName = "BetterWay Notifications";
-					var messageBody = "Wololo!";
+					
 					var email = "kuhackathon2017@gmail.com";
 					match_notification(messageName, messageBody, email);
 					
