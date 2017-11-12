@@ -99,7 +99,7 @@
 
 						riderEmail[count] = snapshot.val().riderEmail;
 						driverEmail[count] = snapshot.val().driverEmail;
-						alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
+						//alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
 						count++;
 					});
 				}
@@ -155,6 +155,8 @@
 						alreadyThere = true;	
 					});
 					
+					//alert(aDriverEmail);
+					
 					getRef = database.ref("Destinations/");
 					getRef.on('child_added', function(snapshot){
 
@@ -164,7 +166,7 @@
 						count++;
 					});
 					
-					alert(driver_check);
+					//alert(driver_check);
 					
 					setTimeout(function() {
 						if(driver_check == "driver")
