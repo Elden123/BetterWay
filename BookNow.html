@@ -77,7 +77,8 @@
 						return 0;
 					}
 					check_destination = parseInt(destination, 10);
-					if (check_destination == NaN)
+
+					if (isNaN(check_destination))
 					{
 						alert("Provide Valid Zip Code");
 						return 0;
