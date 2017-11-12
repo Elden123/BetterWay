@@ -228,7 +228,8 @@
 				$('#testpotato').on('click',function(){ 
 					var messageName = "BetterWay Notifications";
 					var messageBody = "Wololo!";
-					match_notification(messageName, messageBody);
+					var email = "kuhackathon2017@gmail.com";
+					match_notification(messageName, messageBody, email);
 					
 					console.log("submit ride request");
 					// Go to recently booked page if success
@@ -237,12 +238,12 @@
 				});
 				
 				// Sends notification to e-mail
-				function match_notification(message_name, message_body) {
+				function match_notification(message_name, message_body, email) {
 
 					var service_id = 'gmail'; // Edit
 					var template_id = 'template_1B1ld9hk'; // Edit
 
-					emailjs.send(service_id,template_id,{"from_name": message_name, "message_html": message_body})
+					emailjs.send(service_id,template_id,{"from_name": message_name, "message_html": message_body, "to_name": email})
 					.then(function(response) {
 					   console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
 					}, function(err) {
