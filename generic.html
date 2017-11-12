@@ -9,15 +9,35 @@
  		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
  		<link rel="stylesheet" href="main.css" />
  		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFb-tnhXz4ZKKH-BOjgcDXTN3_tVWPwU8&libraries=geometry">
+</script>
 				
 </head>
 				
 <body>
 <script>
-var person = prompt("Please enter your name", "Joe Smith");
-	alert(person);
+var ZipCode = prompt("Please enter your zipcode");
 	
+	geocoder = new google.maps.Geocoder();
+
+function codeAddress() {
+
+    //In this case it gets the address from an element on the page, but obviously you  could just pass it to the method instead
+    var address = ZipCode; //possibly .value
+
+    geocoder.geocode( { 'address' : address }, function( results, status ) {
+        if( status == google.maps.GeocoderStatus.OK ) {
+
+          
+         results[0].geometry.location.lat(), results[0].geometry.location.lng()
+            } );
+        } else {
+            alert( 'Geocode was not successful for the following reason: ' + status );
+        }
+    } );
+}
 	
+	alert(results[0]);
 	
 </script>	
 </body>
