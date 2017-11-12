@@ -77,7 +77,7 @@
 				$('#testpotato').on("click", function () {
 					var destination = document.getElementById("destination").value;
 					var leaveDate = document.getElementById("leaveDate").value;
-					var driver = document.querySelector('input[name="driverOrPassenger"]:checked').value;
+					var driver = document.querySelector('input[name="driverOrPassenger"]:checked');
 					leaveDate = leaveDate.replace(/-/g, '');
 					var codeVal = destination + " " + leaveDate + " " + university;
 					if (destination.length > 5)
