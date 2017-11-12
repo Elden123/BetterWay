@@ -26,6 +26,8 @@
 		firebase.initializeApp(config);
 		
 		function signInUser(userEmail, userPassword) {
+			
+			
 				
 				firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
 			

@@ -41,11 +41,15 @@
 				var data = [];
 				var driverEmail = [];
 				var riderEmail = [];
+				var aRiderEmail;
+				var aDriverEmail;
 				var count = 0;
 				var trunc_email;
 				var r;
 				var getRef;
 				var university = "";
+				var codVal;
+				var alreadyThere = false;
 
 				firebase.auth().onAuthStateChanged(function(user){
 					if(user){
@@ -69,10 +73,54 @@
 				}, 1000);
 
 
-				function addNewDestination(zip, date, university) {
+				function addNewDestination(tData, tDriverEmail, tRiderEmail) {
+					database.ref("Destinations/" + tData + "/").set({
+			    		driverEmail: tDriverEmail,
+						riderEmail: tRiderEmail
+		    		});
+					/*database.ref("Destinations").push({
+						data: codeVal,
+			    		driverEmail: null,
+						riderEmail: null
+					});*/
 
+					/*getRef = database.ref("Destinations/" + codeVal + "/");
+					getRef.on('child_added', function(snapshot){
+						riderEmail[count] = snapshot.val();
+						driverEmail[count] = snapshot.val();
+						alert(riderEmail[count]);
+						count++;
+					});*/
 				}
+				
+				function fillArrays() {
+					getRef = database.ref("Destinations/" + codeVal + "/");
+					getRef.on('child_added', function(snapshot){
 
+						riderEmail[count] = snapshot.val().riderEmail;
+						driverEmail[count] = snapshot.val().driverEmail;
+						alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
+						count++;
+					});
+				}
+				
+				function updateDriverEmail(toCodeVal, newEmail) {
+					//alert("% " + aDriverEmail);
+					var postData = {
+						driverEmail: newEmail,
+						riderEmail: riderEmail[count-1]
+					};
+					database.ref("Destinations/" + toCodeVal + "/").update(postData);
+				}
+				
+				function updateRiderEmail(toCodeVal, newEmail) {
+					//alert("% " + aRiderEmail);
+					var postData = {
+						riderEmail: newEmail,
+						driverEmail: driverEmail[count-1]
+					};
+					database.ref("Destinations/" + toCodeVal + "/").update(postData);
+				}
 
 				$('#testpotato').on("click", function () {
 					var destination = document.getElementById("destination").value;
@@ -93,116 +141,66 @@
 						return 0;
 					}
 					/*database.ref("Destinations/" + codeVal + "/").set({
-			    		driverEmail: "he",
-						riderEmail: "ho"
+			    		driverEmail: "tDriverEmail",
+						riderEmail: "tRiderEmail"
 		    		});*/
-
-					/*database.ref("Destinations").push({
-						data: codeVal,
-			    		driverEmail: null,
-						riderEmail: null
-					});*/
-
-					/*getRef = database.ref("Destinations/" + codeVal + "/");
+					
+					getRef = database.ref("Destinations/" + codeVal + "/");
 					getRef.on('child_added', function(snapshot){
-						riderEmail[count] = snapshot.val();
-						driverEmail[count] = snapshot.val();
-						alert(riderEmail[count]);
-						count++;
-					});*/
-
+						if(!alreadyThere) {
+							aDriverEmail = snapshot.val();
+						} else {
+							aRiderEmail = snapshot.val();
+						}
+						alreadyThere = true;	
+					});
+					
 					getRef = database.ref("Destinations/");
 					getRef.on('child_added', function(snapshot){
 
 						riderEmail[count] = snapshot.val().riderEmail;
-						driverEmail[count] = snapshot.val().riderEmail;
-						data[count] = snapshot.val().data;
-						alert(data[count]);
+						driverEmail[count] = snapshot.val().driverEmail;
+						//alert("RiderEmail " + riderEmail[count] + " DriverEmail " + driverEmail[count]);
 						count++;
 					});
-
-					if(driver_check == "driver")
-					{
-						if(codeVal in data)
-						{
-							var codeValIndex = data.indexOf(codeVal);
-							if(driverEmail[codeValIndex] == NULL)
+					
+					
+					
+					setTimeout(function() {
+						if(driver_check == "driver")
 							{
-								driverEmail[codeValIndex] = userEmail;
-								//store userEmail as driverEmail in data in firebase
-								//update both users of match
-								//set codeVal and children in firebase to NULL
-								driverEmail.remove(codeValIndex);
-								riderEmail.remove(codeValIndex);
-								data.remove(codeValIndex);
-								window.location.href = "RecentlyBooked.html";
+								if(alreadyThere) // we need to make the driver a rider
+								{
+									alert(1);
+									updateRiderEmail(codeVal, userEmail);
+								}
+
+								else //create destination with driver as driver and rider as ""
+								{
+									alert(2);
+									addNewDestination(codeVal, userEmail, "");
+								}
+
 							}
+
 							else
 							{
-								data.push(codeVal);
-								driverEmail.push(userEmail);
-								riderEmail.push(NULL);
-								//add codeVal to Destinations
-								//create two children under codeVal name driverEmail and riderEmail
-								//set driverEmail to userEmail and riderEmail to NULL
-								window.location.href = "CheckLater.html";
+								if(alreadyThere) // update riderEmail to userEmail
+								{
+									alert(3);
+									updateRiderEmail(codeVal, userEmail);
+								}
+
+								else //create a new destination with rider as userEmail and driver as ""
+								{
+									alert(4);
+									addNewDestination(codeVal, "", userEmail);
+								}
+
 							}
-						}
-
-						else
-						{
-							data.push(codeVal); //update
-							driverEmail.push(userEmail);
-							riderEmail.push(NULL);
-							//add codeVal to Destinations
-							//create two children under codeVal name driverEmail and riderEmail
-							//set driverEmail to userEmail and riderEmail to NULL
-							window.location.href = "CheckLater.html";
-						}
-
-					}
-
-					else
-					{
-						if(codeVal in data)
-						{
-							var codeValIndex = data.indexOf(codeVal);
-							if(riderEmail[codeValIndex] == NULL)
-							{
-								riderEmail[codeValIndex] = userEmail;
-								//store userEmail as driverEmail in data in firebase
-								//update both users of match
-								//delete codeVal and children
-								window.location.href = "RecentlyBooked.html";
-							}
-							else
-							{
-								data.push(codeVal); //update arrays
-								driverEmail.push(NULL);
-								riderEmail.push(userEmail);
-								//add codeVal to Destinations
-								//create two children under codeVal name driverEmail and riderEmail
-								//set driverEmail to userEmail and riderEmail to NULL
-								window.location.href = "CheckLater.html";
-							}
-						}
-
-						else
-						{
-							data.push(codeVal);
-							driverEmail.push(userEmail);
-							riderEmail.push(NULL);
-							//add codeVal to Destinations
-							//create two children under codeVal name driverEmail and riderEmail
-							//set driverEmail to userEmail and riderEmail to NULL
-							window.location.href = "CheckLater.html";
-						}
-
-					}
-
-
-
-
+					}, 1500);
+					
+					
 
 					//call function here
 
