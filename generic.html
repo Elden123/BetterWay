@@ -9,7 +9,7 @@
  		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
  		<link rel="stylesheet" href="main.css" />
  		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFb-tnhXz4ZKKH-BOjgcDXTN3_tVWPwU8libraries=geometry">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFb-tnhXz4ZKKH-BOjgcDXTN3_tVWPwU8&libraries=geometry">
 
 	alert("test");
 	
@@ -19,7 +19,7 @@
 
   var geocoder = new google.maps.Geocoder();
 
-  geocoder.geocode({address: addressInput}, function(results, status) {
+  geocoder.geocode({address: addressInput}, callback function(results, status) {
 
     if (status == google.maps.GeocoderStatus.OK) {
 	 var myResult = results[0].geometry.location;
