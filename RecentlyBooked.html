@@ -80,7 +80,7 @@
 					
 					getDriverData(userEmail);
 					
-				}, 1600);
+				}, 2000);
 				
 				function getRiderData(uEmal) {
 					var ref = database.ref("Destinations/");
@@ -102,6 +102,10 @@
 								date = snapshot.key.substring(6, 14);
 								zip = snapshot.key.substring(0, 6);
 								otherUserEmail = snapshot.val().driverEmail;
+								date = date.substring(0, 2) + "/" + date.substring(2, 4) + "/" + date.substring(4);
+								if(otherUserPhoneNumber.indexOf("(") == -1) {
+									otherUserPhoneNumber = "(" + otherUserPhoneNumber.substring(0, 3) + ") " + otherUserPhoneNumber.substring(3, 6) + "-" + otherUserPhoneNumber.substring(6);	
+								}
 								$("#toAddTo").append("<tr><td>" + date + "</td><td>" + zip + "</td><td>Rider</td><td>" + otherUserName + "</td><td>" + otherUserEmail + "</td><td>" + otherUserPhoneNumber + "</td></tr>");
 							}, 750);
 							
@@ -132,6 +136,10 @@
 								date = snapshot.key.substring(6, 14);
 								zip = snapshot.key.substring(0, 6);
 								otherUserEmail = snapshot.val().riderEmail;
+								date = date.substring(0, 2) + "/" + date.substring(2, 4) + "/" + date.substring(4);
+								if(otherUserPhoneNumber.indexOf("(") == -1) {
+									otherUserPhoneNumber = "(" + otherUserPhoneNumber.substring(0, 3) + ") " + otherUserPhoneNumber.substring(3, 6) + "-" + otherUserPhoneNumber.substring(6);	
+								}
 								$("#toAddTo").append("<tr><td>" + date + "</td><td>" + zip + "</td><td>Driver</td><td>" + otherUserName + "</td><td>" + otherUserEmail + "</td><td>" + otherUserPhoneNumber + "</td></tr>");
 							}, 750);
 							
