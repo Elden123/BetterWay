@@ -14,7 +14,8 @@
 <script>
 	alert("test");
 	geocoder = new google.maps.Geocoder();
-	var address = 66223.value;
+	var address = 66223;
+	var location;
 	
 function codeAddress() {
 
@@ -30,8 +31,8 @@ function codeAddress() {
                 map     : map,
                 position: results[0].geometry.location*/
 		
-		var long = results[0].geometry.location.lng();
-		var lat = results[0].geometry.location.lat();
+		location = results[0].geometry.location.LatLng();
+		
             } );
         } else {
             alert( 'Geocode was not successful for the following reason: ' + status );
@@ -39,7 +40,7 @@ function codeAddress() {
     } );
 }
 	
-	alert(lat);
+	alert(location);
 </script>				
 </head>
 				
